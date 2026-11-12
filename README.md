@@ -1,6 +1,3 @@
-# Anonymous reproduction artifact
-
-This repository contains the code and fixed experiment specifications used for the paper's maize hybrid selection experiments. It is prepared as a review-stage reproduction artifact and does not include the manuscript, raw data, private data, model checkpoints, experiment logs, or generated results.
 
 ## Scope
 

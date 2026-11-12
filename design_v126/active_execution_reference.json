@@ -1,0 +1,100 @@
+{
+  "active_version": "v1.26-R2",
+  "parent_version": "v1.26-R1",
+  "parent_config": "design_v126/experiment_config.json",
+  "revision": "design_v126/revisions/v1.26-R2_2024_soil_repair.md",
+  "review": "reports/v126/R0_2024_repair_review.json",
+  "scientific_model_changes": false,
+  "numerical_input_changes": true,
+  "change": "2024七环境土壤时点修复；合法历史输入和模型语义保持原样",
+  "exception_receipt": "reports/v126/R0_data_2024_climate_window_issue.json",
+  "unaffected_years": [
+    2019,
+    2020,
+    2021,
+    2022,
+    2023
+  ],
+  "affected_years": [
+    2024
+  ],
+  "blocked_chains": {},
+  "historical_execution": "2019及2020—2023土壤日期核对通过后按原数值和合同继续，运行代码与本依据按运行身份保存独立快照",
+  "candidate": "N1，仍为本次唯一明确追加候选；不重置历史改进链计数",
+  "active_versions_by_branch": {
+    "2019_development": {
+      "version": "v1.26-R1",
+      "snapshot": "runs/v126/code_R1_2019",
+      "changes": false
+    },
+    "2020_2023": {
+      "version": "v1.26-R1",
+      "inputs_unchanged": true
+    },
+    "2024": {
+      "version": "v1.26-R2",
+      "input_review": "PASS_R2_INPUT_REPAIR",
+      "remote_pickle_review": "PASS_REMOTE_ACTUAL_OBJECT_EQUAL",
+      "execution_sources": "reports/v126/R0_2024_repaired/execution_sources_R2.json",
+      "results_review": "reports/v126/R0_2024_results_review.json",
+      "results_state": "DATA_AND_C0_READY",
+      "results_review_sha256": "b41e9f791a665dbf6c5b61601ba0fcb3db2310d418bfab543f3361351681abcb"
+    }
+  },
+  "updated_utc": "2026-09-22T16:00:01.847217+00:00",
+  "current_research_continuation": {
+    "chain_id": "C2_SELECTIVE_RISK_TRAIT",
+    "active_version": "v1.26-R4.7-scoped-evidence",
+    "state": "COMPLETE_SCOPED_EVIDENCE_REVIEW",
+    "reference": "reports\\v126\\R4_new_chain_candidate_20260928\\active_execution_reference_R4_candidate.json",
+    "review": "reports/v126/R4_new_chain_candidate_20260928/r47_scope_review_20261015.json",
+    "updated_at_utc": "2026-10-15T07:07:23.426891+00:00",
+    "historical_status_unchanged": true,
+    "active_analysis_version": "v1.26-R4.7-scoped-evidence",
+    "analysis_review": "reports/v126/R4_new_chain_candidate_20260928/r47_scope_review_20261015.json",
+    "execution_review": "reports/v126/R4_new_chain_candidate_20260928/r46_evidence_review_20261015.json",
+    "previous_execution_review_alias": "reports\\v126\\R4_new_chain_candidate_20260928\\r44_budget_replay_review_20261013.json",
+    "active_plan": "reports/v126/R4_new_chain_candidate_20260928/PLAN_v1.26-R4.7-scoped-evidence.md",
+    "active_contract": "reports/v126/R4_new_chain_candidate_20260928/R4_scope_contract_v1.26-R4.7.json",
+    "completed_improvement_versions": 3,
+    "next_stage": "无剩余实验；当前收窄工作完成",
+    "claim_evidence_map": "reports/v126/R4_new_chain_candidate_20260928/claim_evidence_map_R4.7_scoped_20261015.json",
+    "latest_fixed_prediction_diagnosis": "reports/v126/R4_new_chain_candidate_20260928/artifacts/fixed_prediction_diagnosis_R4.6_20261015/review.json",
+    "active_local_processes": [],
+    "scope_review": "reports/v126/R4_new_chain_candidate_20260928/r47_scope_review_20261015.json",
+    "scope_authorization": "reports/v126/R4_new_chain_candidate_20260928/scope_authorization_R4.7_20261015.json",
+    "report": "reports/v126/R4_new_chain_candidate_20260928/R4.7研究目标收窄与结题说明_20261015.md",
+    "status": "COMPLETE_SCOPED_EVIDENCE_REVIEW",
+    "task_state": "COMPLETE_SCOPED_EVIDENCE_REVIEW",
+    "current_run_state": "COMPLETE_SCOPED_EVIDENCE_REVIEW",
+    "new_improvement_count": 0,
+    "scientific_gate_pass": false,
+    "scientific_claim": false,
+    "scoped_evidence_summary_complete": true,
+    "closure_scope": "仅 C2 收窄后的开发证据整理；不修改其他项目或 C1 历史",
+    "next_gate": "无待批准事项；新研究或论文工作需另行明确任务",
+    "active_oof": [],
+    "queued_seeds": [],
+    "active_history_oof_seeds": [],
+    "queued_history_oof_seeds": [],
+    "periodic_monitor_started": false,
+    "last_checked_utc": "2026-10-15T07:07:23.426891+00:00",
+    "current_run_receipt": "reports/v126/R4_new_chain_candidate_20260928/r47_scope_review_20261015.json",
+    "latest_scientific_trial_review": "reports/v126/R4_new_chain_candidate_20260928/r46_evidence_review_20261015.json",
+    "current_execution_review": "reports/v126/R4_new_chain_candidate_20260928/r46_evidence_review_20261015.json",
+    "current_review_type": "用户授权后的目标收窄与证据自审",
+    "latest_resource_review": "reports/v126/R4_new_chain_candidate_20260928/r47_resource_ownership_receipt_20261015.json",
+    "original_claim_scope_changed": true,
+    "remaining_experiments": [],
+    "project_complete": true,
+    "analysis_plan": "reports/v126/R4_new_chain_candidate_20260928/PLAN_v1.26-R4.7-scoped-evidence.md",
+    "analysis_contract": "reports/v126/R4_new_chain_candidate_20260928/R4_scope_contract_v1.26-R4.7.json",
+    "plan_review": "reports/v126/R4_new_chain_candidate_20260928/r47_scope_review_20261015.json",
+    "latest_analysis_reviews": [
+      "reports/v126/R4_new_chain_candidate_20260928/r47_scope_review_20261015.json"
+    ],
+    "current_run_runtime": null,
+    "activation_blocker": null,
+    "plan_version": "v1.26-R4.7-scoped-evidence"
+  }
+}

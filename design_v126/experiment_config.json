@@ -1,0 +1,260 @@
+{
+  "schema_version": "1.0",
+  "plan_version": "v1.26",
+  "status": "PASS_DESIGN_REVIEW，设计已审查，未执行",
+  "candidate_id": "N1",
+  "candidate_scope": "唯一候选；历史遮蔽任务中训练适配后的预测；不改M选样",
+  "data": {
+    "outer_years": [
+      2020,
+      2021,
+      2022,
+      2023,
+      2024
+    ],
+    "development_year": 2019,
+    "development_train_years": [
+      2014,
+      2015,
+      2016,
+      2017,
+      2018
+    ],
+    "feature_time": "原播前白名单",
+    "role_seeds": [
+      11,
+      23,
+      37,
+      53,
+      71
+    ],
+    "training_seeds": [
+      1009,
+      2027,
+      3037
+    ],
+    "development_training_seed": 1009,
+    "audit_fraction": 0.3,
+    "min_genotypes_per_eval_environment": 100,
+    "top_fraction": 0.2,
+    "budgets": [
+      0.1,
+      0.2,
+      0.4,
+      0.6
+    ],
+    "initial_per_environment": 2,
+    "initial_included_in_budget": true,
+    "selected_ids": "继承原M，不重新选样",
+    "source_2024": "USER_ASSUMED_SAME_FORM",
+    "s_ref": 2.78561424436278,
+    "scale_unit": "t/ha",
+    "outer_results_evidence_level": "探索性"
+  },
+  "model": {
+    "backbone": "TabM",
+    "blocks": 3,
+    "width": 128,
+    "members": 16,
+    "activation": "ReLU",
+    "dropout": 0,
+    "input_features_max": 296,
+    "projection_rank": 8,
+    "projection_seed": 12600,
+    "projection": "标准正态QR，列符号规范化后保存数组及散列",
+    "response": "tanh(hidden@P)，按全候选V_e的特征中心化",
+    "lambda_intercept": 1,
+    "lambda_shared_response": 10,
+    "network_dtype": "float32",
+    "solve_dtype": "float64",
+    "label_center": "每次历史训练组合均值",
+    "label_scale": "固定s_ref",
+    "covariance_claim": false
+  },
+  "training": {
+    "pretrain_epochs": 20,
+    "steps_per_epoch": 100,
+    "pretrain_batch_environments": 16,
+    "pretrain_max_records_per_environment": 64,
+    "lr_pretrain": 0.001,
+    "lr_stage_b": 0.0003,
+    "optimizer": "AdamW",
+    "betas": [0.9, 0.999],
+    "eps": 1e-8,
+    "weight_decay": 0.0001,
+    "clip_grad_norm": 1,
+    "stage_b_max_epochs": 30,
+    "stage_b_task_year_sampling": "等概率",
+    "stage_b_min_environment_records": 100,
+    "stage_b_min_environments": 2,
+    "stage_b_support": "Q中S0加均匀抽样，预算四档等概率",
+    "stage_b_target_fraction": 0.3,
+    "stage_b_max_targets_per_environment": 64,
+    "checkpoints_shared_across_roles_budgets": true,
+    "pretrain_shared_across_three_branches": true,
+    "pretrain_optimizer_state_copied": true,
+    "stage_b_branches": [
+      "ordinary",
+      "centered",
+      "N1"
+    ],
+    "early_stop": {
+      "year": 2019,
+      "roles": [
+        11,
+        23,
+        37,
+        53,
+        71
+      ],
+      "metric": "四预算实际横轴的归一化标准化遗憾AUC",
+      "include_epoch_zero": true,
+      "scoring_predictions": {"ordinary": "C2", "centered": "C3", "N1": "N1"},
+      "pause_expansion_only_when_N1_epoch_zero": true,
+      "min_observed_epochs": 5,
+      "patience": 5,
+      "tie_tolerance": 1e-8,
+      "tie_break": "较早epoch",
+      "final_fit": "每分支开发E固定后应用于全部外层年份和三个训练种子"
+    }
+  },
+  "methods": {
+    "C0": {
+      "kind": "既有高斯预测",
+      "training_replicates": null
+    },
+    "C1": {
+      "kind": "ordinary+仅截距",
+      "checkpoint": "ordinary"
+    },
+    "C2": {
+      "kind": "ordinary+共享响应",
+      "checkpoint": "ordinary"
+    },
+    "C3": {
+      "kind": "中心化+普通MSE，权重1，再共享响应",
+      "checkpoint": "centered"
+    },
+    "N1": {
+      "kind": "适配后MSE",
+      "checkpoint": "N1"
+    },
+    "N1_INT": {
+      "kind": "N1同checkpoint去响应",
+      "checkpoint": "N1"
+    },
+    "N1_ZERO": {
+      "kind": "N1零标签",
+      "checkpoint": "N1"
+    },
+    "C2_ZERO": {
+      "kind": "C2零标签",
+      "checkpoint": "ordinary"
+    },
+    "N1_ALL": {
+      "kind": "N1全部U",
+      "checkpoint": "N1"
+    },
+    "C2_ALL": {
+      "kind": "C2全部U",
+      "checkpoint": "ordinary"
+    },
+    "X1": {
+      "kind": "TabICLv2",
+      "checkpoint": "tabicl-regressor-v2-20260212.ckpt",
+      "random_state": 12601,
+      "n_estimators": 8,
+      "max_context_rows": 16384,
+      "context": "全部S+确定性分层历史抽样",
+      "kv_cache": true,
+      "batch_size": 1,
+      "float_precision": "float32",
+      "gate": "R2支持主要假设且方法实现验收"
+    },
+    "X2": {
+      "kind": "MeNet-G2F适配复现",
+      "protocol_file": "external_baseline_contract.md",
+      "gate": "R2支持主要假设且方法实现验收"
+    }
+  },
+  "metrics": {
+    "primary": "normalized_standardized_regret_auc_0.10_0.60",
+    "zero_denominator": 1e-8,
+    "aggregation": [
+      "环境等权",
+      "同角色网络种子等权",
+      "年度内角色等权",
+      "五年度等权"
+    ],
+    "references_excluded_from_auc": true,
+    "bootstrap": {
+      "unit": "整年",
+      "draws": 2000,
+      "seed": 12602,
+      "interpretation": "描述性95%区间，非独立气候显著性证据"
+    },
+    "cvar_alpha": 0.8,
+    "primary_comparator": "C2"
+  },
+  "support": {
+    "V126_H1": {
+      "comparator": "C2",
+      "relative_auc_reduction_min": 0.05,
+      "years_strict_improvement_min": 4,
+      "macro_retention_difference_min": 0
+    },
+    "V126_H2": {
+      "comparator": "C3",
+      "relative_auc_reduction_min": 0.05,
+      "years_strict_improvement_min": 4,
+      "macro_retention_difference_min": 0
+    },
+    "V126_H3": {
+      "comparator": "N1_INT",
+      "relative_auc_reduction_min": 0,
+      "strict_macro_improvement": true,
+      "incremental_gain_difference": "(R_N1_ZERO-AUC_N1)-(R_C2_ZERO-AUC_C2)",
+      "incremental_gain_macro_strictly_positive": true,
+      "incremental_gain_positive_years_min": 4,
+      "years_strict_improvement_min": 4,
+      "macro_retention_difference_min": 0
+    },
+    "novelty_not_guaranteed": true,
+    "sota_confirmatory_evidence": "需未参与方法开发的独立评价；本版G2F结果不能单独满足"
+  },
+  "continuation": {
+    "prior_count": "保留C1主账H1/H2/DCAP与后续R2c/PC-CVT的衔接，不重置",
+    "new_candidate_allowance": 1,
+    "authorization_basis": "用户明确继续探索新算法并接受本候选设计；费用不限",
+    "first_effective_real_data_result_counts": true,
+    "if_valid_negative": "WAITING_AUTHORIZATION；保留证据，停止追加不同版本",
+    "historical_states_immutable": true
+  },
+  "stages": [
+    "R0数据/实现/证据修正",
+    "R1开发",
+    "R2核心比较",
+    "R3条件最新与农业对照",
+    "R4外部元数据验收后另立确认协议"
+  ],
+  "resources": {
+    "local_python": "C:/Users/zyh/miniconda3/envs/dl_env/python.exe",
+    "remote_host": "xinxi-zhyh@211.87.115.228",
+    "remote_default": "按负载和实时队列选择；TabM单卡3090/4CPU/16GiB为待测起点，不是已申请",
+    "refresh_before_submission": true,
+    "local_full_training_only_after_resource_assessment": true,
+    "spending_cap": null,
+    "adaptive_monitoring": true
+  },
+  "planned_counts": {
+    "core_records": 1900,
+    "core_new_prediction_records": 1800,
+    "core_inherited_records": 100,
+    "core_pretrain_checkpoints": 15,
+    "core_stage_b_branches": 45,
+    "development_pretrain_checkpoints": 1,
+    "development_stage_b_branches": 3,
+    "conditional_x1_records": 100,
+    "conditional_x2_records": 300
+  }
+}

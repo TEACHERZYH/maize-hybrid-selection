@@ -1,0 +1,6 @@
+numpy>=1.24
+scipy>=1.10
+threadpoolctl>=3.2
+torch>=2.1
+rtdl-num-embeddings>=0.0.11
+typing-extensions>=4.8

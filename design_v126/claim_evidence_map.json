@@ -1,0 +1,62 @@
+{
+  "version": "v1.26",
+  "state": "尚无新实验结果",
+  "claims": [
+    {
+      "id": "V126_H1",
+      "claim": "稀疏支持适配后的训练优于普通监督加同一响应头",
+      "comparison": "N1-C2",
+      "stage": "R2",
+      "criteria": "AUC相对下降≥5%，至少4/5年度严格改善，四预算宏平均保留率不下降",
+      "evidence_level": "探索性"
+    },
+    {
+      "id": "V126_H2",
+      "claim": "训练方法超越简单环境中心化",
+      "comparison": "N1-C3",
+      "stage": "R2",
+      "criteria": "同V126_H1",
+      "evidence_level": "探索性"
+    },
+    {
+      "id": "V126_H3",
+      "claim": "环境内响应更新对选择有帮助",
+      "comparison": "N1-N1_INT，加ZERO到预算增益",
+      "stage": "R2",
+      "criteria": "AUC宏平均严格下降，至少4/5年度同向，保留率不下降；另ΔG=(R_N1_ZERO-AUC_N1)-(R_C2_ZERO-AUC_C2)宏平均>0且至少4/5年>0；仅作描述性更新增益解释",
+      "evidence_level": "探索性"
+    },
+    {
+      "id": "V126_PRACTICAL",
+      "claim": "在固定M表型预算下改善现有预测",
+      "comparison": "N1-C0",
+      "stage": "R2",
+      "criteria": "预定义5%/4年/保留率门槛",
+      "evidence_level": "探索性"
+    },
+    {
+      "id": "V126_COMPARATIVE",
+      "claim": "在指定协议与配置下优于已实现的近期方法",
+      "comparison": "N1-X1/X2",
+      "stage": "R3",
+      "criteria": "方法验收、矩阵完整、逐年度效果及配置限制披露；不得只引用原文分数",
+      "evidence_level": "探索性"
+    },
+    {
+      "id": "V126_SOTA_CONFIRM",
+      "claim": "独立资料支持的同任务领先表现",
+      "stage": "R4",
+      "state": "独立数据与协议未验收",
+      "criteria": "需未参与开发的评价数据及预先规定的协议，不由新seed或重新分池代替"
+    }
+  ],
+  "excluded_claims": [
+    "TabM不可替代",
+    "首次排序用于育种",
+    "理论最优试验设计",
+    "校准后验或分布无关覆盖保证",
+    "查询比例等于真实田间试验/成本节省比例",
+    "现有G2F多年反复开发结果是独立确认"
+  ],
+  "history": "旧主张与终态原样保留；本版不把旧失败按新标准改为成功"
+}
